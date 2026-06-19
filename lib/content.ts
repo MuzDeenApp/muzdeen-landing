@@ -1,155 +1,254 @@
 import {
   BadgeCheck,
+  BanknoteArrowUp,
   BarChart3,
   Building2,
   Clock3,
   CreditCard,
-  FileCheck2,
+  GraduationCap,
   HandHeart,
+  HeartHandshake,
+  Landmark,
   LockKeyhole,
+  type LucideIcon,
   Megaphone,
-  MousePointerClick,
-  Nfc,
+  MonitorSmartphone,
+  Moon,
   QrCode,
   ReceiptText,
+  ScanLine,
   ShieldCheck,
-  Smartphone,
   Sparkles,
+  Wallet,
 } from "lucide-react";
 
+/* ------------------------------------------------------------------ */
+/* Navigation                                                          */
+/* ------------------------------------------------------------------ */
+
 export const navItems = [
-  { label: "Solution", href: "#solution" },
-  { label: "Mosquees", href: "#mosquees" },
-  { label: "Produit", href: "#produit" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Comment ça marche", href: "/#fonctionnement" },
+  { label: "Pour qui", href: "/#pour-qui" },
+  { label: "Confiance", href: "/#confiance" },
+  { label: "Tarif", href: "/#tarif" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
-export const problemPoints = [
-  "Les dons en espece diminuent alors que les besoins des mosquees restent constants.",
-  "Les dons spontanes sont souvent perdus quand un fidele n'a pas de cash sur lui.",
-  "Les mosquees manquent d'outils simples pour rendre le don accessible partout.",
-  "La confiance exige une experience claire, rapide et professionnelle.",
+/** Téléchargement de l'application (badges stores + QR code). */
+export const download = {
+  qr: "/assets/qr-download.svg",
+  appStore: { src: "/appstore.png", href: "https://www.apple.com/app-store/", alt: "Télécharger dans l'App Store" },
+  googlePlay: { src: "/googleplay.png", href: "https://play.google.com/store", alt: "Disponible sur Google Play" },
+};
+
+/* ------------------------------------------------------------------ */
+/* 1. Hero                                                             */
+/* ------------------------------------------------------------------ */
+
+export const hero = {
+  badge: "Les dons, dignes du XXIᵉ siècle",
+  // Découpé en lignes pour l'animation séquencée (slide-up ligne par ligne).
+  titleLines: ["Pour ici", "et l'au-delà."],
+  subtitle:
+    "Muz'Deen permet à chacun de soutenir une mosquée ou une association en quelques secondes, et à chaque organisation de collecter plus, gérer mieux et rendre des comptes en toute transparence.",
+  primaryCta: { label: "Je suis donateur", href: "#fonctionnement" },
+  secondaryCta: { label: "Inscrire mon organisation", href: "#demo" },
+  stats: [
+    { value: "2€", label: "Don minimum, pour rester accessible à tous" },
+    { value: "3%", label: "De commission, uniquement sur les dons reçus" },
+    { value: "0€", label: "Qui transite par Muz'Deen : tout va à l'organisation" },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* 2. Le problème — Avant / Après                                      */
+/* ------------------------------------------------------------------ */
+
+type ComparisonItem = { title: string; text: string };
+
+export const beforeItems: ComparisonItem[] = [
+  { title: "Boîte à dons & espèces", text: "L'argent liquide se raréfie, et une partie de la générosité ne se transforme jamais en don." },
+  { title: "Virements manuels", text: "RIB recopié, libellés approximatifs, rapprochements interminables." },
+  { title: "QR codes statiques épars", text: "Des codes non centralisés, sans suivi, impossibles à mettre à jour." },
+  { title: "Excel & WhatsApp", text: "Des outils éparpillés, aucune visibilité en temps réel, aucun reçu pour le donateur." },
 ];
 
-export const solutionSteps = [
-  {
-    icon: QrCode,
-    title: "QR code visible",
-    text: "Sur la porte, une affiche, un comptoir ou un support de campagne.",
-  },
-  {
-    icon: Nfc,
-    title: "Badge NFC",
-    text: "Un geste naturel pour ouvrir la page de don depuis un smartphone compatible.",
-  },
-  {
-    icon: HandHeart,
-    title: "Don express",
-    text: "Montant clair, paiement rapide, confirmation immediate et recu prevu.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Compte facultatif",
-    text: "Le fidele peut donner sans friction, puis creer un compte s'il veut un historique.",
-  },
+export const afterItems: ComparisonItem[] = [
+  { title: "Don en quelques secondes", text: "Carte, Apple Pay ou Google Pay, depuis le téléphone du fidèle." },
+  { title: "Reçu instantané", text: "Chaque donateur reçoit la confirmation de son don, immédiatement." },
+  { title: "Tout centralisé", text: "QR codes, campagnes, écrans TV et statistiques dans une seule application." },
+  { title: "Comptes transparents", text: "Des objectifs en temps réel à montrer à toute la communauté." },
 ];
 
-export const howItWorks = [
-  "La mosquee recoit son QR code ou son badge NFC.",
-  "Le fidele scanne depuis son telephone.",
-  "Il choisit un montant ou une campagne.",
-  "Il donne en quelques secondes.",
+/* ------------------------------------------------------------------ */
+/* 3. Comment ça marche — parcours de bout en bout                    */
+/* ------------------------------------------------------------------ */
+
+type JourneyStep = { actor: string; title: string; text: string; icon: LucideIcon };
+
+export const journeySteps: JourneyStep[] = [
+  { actor: "Organisation", title: "Demande d'inscription", text: "La mosquée ou l'association soumet sa demande depuis l'application.", icon: Building2 },
+  { actor: "Muz'Deen", title: "Vérification & validation", text: "Notre équipe contrôle et approuve l'organisation sur le dashboard.", icon: BadgeCheck },
+  { actor: "Manager", title: "Activation Stripe Connect", text: "Onboarding, identité et RIB : l'organisation est prête à recevoir.", icon: LockKeyhole },
+  { actor: "Organisation", title: "QR codes générés", text: "Affichés sur la porte, le comptoir, une affiche ou un écran TV.", icon: QrCode },
+  { actor: "Donateur", title: "Scan & don", text: "Il choisit son montant et paie en carte, Apple Pay ou Google Pay.", icon: ScanLine },
+  { actor: "Organisation", title: "Réception directe", text: "L'argent arrive sur son compte Stripe. Reçu envoyé instantanément.", icon: HeartHandshake },
 ];
 
-export const mosqueBenefits = [
-  "Recevoir plus de dons au bon moment",
-  "Reduire la dependance au cash",
-  "Suivre les dons et les campagnes",
-  "Recevoir des rapports exploitables",
-  "Rassurer les fideles avec une experience claire",
-  "Preparer une collecte moderne et mesurable",
+/* ------------------------------------------------------------------ */
+/* 4. Pour qui — types d'organisations                                */
+/* ------------------------------------------------------------------ */
+
+type Organization = { title: string; text: string; icon: LucideIcon };
+
+export const organizations: Organization[] = [
+  { title: "Mosquées", text: "Collecte des dons du quotidien, du vendredi et des grandes occasions.", icon: Landmark },
+  { title: "Cours de Coran", text: "Associations d'enseignement qui financent leurs classes et leurs locaux.", icon: GraduationCap },
+  { title: "Associations musulmanes", text: "Structures communautaires qui animent et soutiennent leur quartier.", icon: HeartHandshake },
+  { title: "Associations humanitaires", text: "Campagnes d'urgence et de solidarité, suivies en temps réel.", icon: HandHeart },
+  { title: "Associations culturelles", text: "Projets, événements et transmission au service de la communauté.", icon: Sparkles },
 ];
 
-export const donorBenefits = [
-  "Faire des dons selon ses besoins",
-  "Garder le montant de son don confidentiel",
+/* ------------------------------------------------------------------ */
+/* 5. Confiance & sécurité — flux d'argent                            */
+/* ------------------------------------------------------------------ */
+
+type FlowNode = { title: string; text: string; icon: LucideIcon };
+
+export const moneyFlow: FlowNode[] = [
+  { title: "Donateur", text: "Paie en toute sécurité, carte ou wallet mobile.", icon: HandHeart },
+  { title: "Stripe", text: "Traite le paiement. Aucune donnée de carte chez Muz'Deen.", icon: CreditCard },
+  { title: "Organisation", text: "Reçoit directement les fonds sur son compte Stripe.", icon: Landmark },
 ];
 
-export const features = [
-  { icon: QrCode, title: "QR code dynamique", text: "Un point d'entree simple pour chaque mosquee ou campagne." },
-  { icon: Nfc, title: "NFC ready", text: "Prevu pour badges, plaques et supports physiques." },
-  { icon: MousePointerClick, title: "Dons sans compte", text: "L'experience reste rapide pour maximiser les dons spontanes." },
-  { icon: CreditCard, title: "Apple Pay / Google Pay ready", text: "Pensé pour les paiements mobiles modernes via Stripe a terme." },
-  { icon: BarChart3, title: "Dashboard mosquee", text: "Suivi des dons, tendances et rapports dans la roadmap." },
-  { icon: Megaphone, title: "Campagnes", text: "Collectes ciblees pour travaux, Ramadan, Zakat ou projets locaux." },
-  { icon: ReceiptText, title: "Recus", text: "Confirmation claire apres le don, avec evolutions administratives prevues." },
-  { icon: ShieldCheck, title: "Securite", text: "Architecture pensee pour proteger les flux et limiter l'exposition des donnees." },
-  { icon: Building2, title: "Analytics", text: "Indicateurs utiles pour comprendre les collectes sans complexite inutile." },
-  { icon: Clock3, title: "Fonctions islamiques", text: "Horaires de priere, Qibla, Tasbih, Istighfar et Duaas dans l'app." },
+export const trustItems: FlowNode[] = [
+  { icon: ShieldCheck, title: "Double vérification", text: "L'organisation est validée par l'équipe Muz'Deen, puis par Stripe (identité, RIB) avant de pouvoir recevoir le moindre don." },
+  { icon: BanknoteArrowUp, title: "L'argent ne transite jamais", text: "Les fonds vont directement de Stripe au compte de l'organisation. Muz'Deen ne détient jamais l'argent des donateurs." },
+  { icon: LockKeyhole, title: "Paiements sécurisés", text: "Stripe gère l'intégralité des paiements selon les standards bancaires les plus exigeants." },
+  { icon: ReceiptText, title: "Transparence totale", text: "Reçu instantané pour le donateur, suivi en temps réel et objectifs affichés pour la communauté." },
 ];
 
-export const productScreens = [
-  { title: "Accueil", eyebrow: "App mobile", stat: "For Here and Beyond", icon: Sparkles },
-  { title: "Mosquees", eyebrow: "Decouverte", stat: "Autour de vous", icon: Building2 },
-  { title: "Fiche mosquee", eyebrow: "Confiance", stat: "Infos & campagnes", icon: BadgeCheck },
-  { title: "Don", eyebrow: "Paiement", stat: "10 EUR - 25 EUR - 50 EUR", icon: HandHeart },
-  { title: "Merci", eyebrow: "Confirmation", stat: "Don enregistre", icon: FileCheck2 },
-  { title: "Qibla & horaires", eyebrow: "Spiritualite", stat: "Services utiles", icon: Smartphone },
-];
+/* ------------------------------------------------------------------ */
+/* 6. Modèle économique                                               */
+/* ------------------------------------------------------------------ */
 
-export const roadmap = [
-  {
-    phase: "MVP",
-    title: "Fondations produit",
-    text: "Dons simules, mosquees, fiches detaillees et application mobile.",
+export const pricing = {
+  example: {
+    donation: 10,
+    // Répartition illustrative pour un don de 10€.
+    breakdown: [
+      { label: "Frais Stripe", amount: 0.4, note: "Traitement du paiement", tone: "muted" as const },
+      { label: "Commission Muz'Deen", amount: 0.3, note: "3% du don", tone: "accent" as const },
+      { label: "Reçu par l'organisation", amount: 9.3, note: "Versé directement", tone: "primary" as const },
+    ],
   },
-  {
-    phase: "V1",
-    title: "Don terrain",
-    text: "QR code, NFC, integration Stripe en test puis production selon validation.",
-  },
-  {
-    phase: "V2",
-    title: "Pilotage mosquee",
-    text: "Dashboard, campagnes, analytics, rapports et outils de suivi.",
-  },
-  {
-    phase: "Futur",
-    title: "Reseau communautaire",
-    text: "Reseau de mosquees, outils communautaires et services islamiques enrichis.",
-  },
+  points: [
+    { title: "Aucun abonnement", text: "Pas de frais fixes, pas d'engagement. Vous ne payez que si vous collectez." },
+    { title: "3% de commission", text: "Uniquement sur les dons reçus. C'est notre seule source de revenus." },
+    { title: "Don minimum 2€", text: "Un choix délibéré et militant : un don de 2€ est aussi noble qu'un don de 200€." },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* 7. Pour les organisations (B2B)                                    */
+/* ------------------------------------------------------------------ */
+
+export const orgBenefits = [
+  { icon: MonitorSmartphone, title: "Gestion 100% mobile", text: "Profil, campagnes, QR codes et écrans TV pilotés depuis l'application." },
+  { icon: QrCode, title: "QR codes & écrans TV", text: "Des points de don partout dans le lieu, mis à jour en un geste." },
+  { icon: BarChart3, title: "Statistiques en temps réel", text: "Dons, tendances et objectifs de campagne, à jour à la seconde." },
+  { icon: ShieldCheck, title: "Zéro risque financier", text: "Pas d'avance, pas d'abonnement. L'argent va directement à l'organisation." },
 ];
+
+export const dashboardStats = [
+  { label: "Collecté ce mois", value: "12 480 €", trend: "+38%" },
+  { label: "Donateurs", value: "342", trend: "+19%" },
+  { label: "Dons récurrents", value: "87", trend: "+12%" },
+];
+
+/* ------------------------------------------------------------------ */
+/* 8. Ramadan                                                          */
+/* ------------------------------------------------------------------ */
+
+export const ramadan = {
+  eyebrow: "Le mois béni",
+  title: "Le Ramadan, votre plus grand moment de collecte.",
+  text: "Pendant le Ramadan, les dons sont multipliés par 5 à 10. Muz'Deen vous accompagne avec des campagnes spéciales, des objectifs affichés en temps réel et des notifications quotidiennes pour mobiliser votre communauté.",
+  highlights: [
+    { value: "×5 à ×10", label: "L'intensité des dons pendant le mois" },
+    { value: "30–40%", label: "Des dons annuels concentrés sur cette période" },
+    { value: "Temps réel", label: "Objectifs de campagne affichés à la communauté" },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
+/* 9. Témoignages — placeholders honnêtes (à remplacer)               */
+/* ------------------------------------------------------------------ */
+
+export const testimonials = [
+  { role: "Responsable de mosquée", placeholder: "Témoignage à venir — recueilli auprès d'une organisation pilote." },
+  { role: "Trésorier d'association", placeholder: "Témoignage à venir — recueilli auprès d'une organisation pilote." },
+  { role: "Donateur régulier", placeholder: "Témoignage à venir — recueilli auprès d'un donateur." },
+];
+
+/* ------------------------------------------------------------------ */
+/* 10. FAQ                                                             */
+/* ------------------------------------------------------------------ */
 
 export const faqs = [
   {
-    question: "Est-ce que le don necessite un compte ?",
-    answer: "Non. La vision de Muz'Deen est de permettre un don en quelques secondes sans compte obligatoire. Le compte devient utile ensuite pour l'historique et les services avances.",
+    question: "Les paiements sont-ils sécurisés ?",
+    answer:
+      "Oui. L'intégralité des paiements est traitée par Stripe, l'un des standards mondiaux du paiement en ligne. Aucune donnée de carte bancaire n'est stockée par Muz'Deen.",
   },
   {
-    question: "Comment fonctionne le QR code ?",
-    answer: "La mosquee affiche un QR code qui ouvre sa page de don. Le fidele choisit un montant, verifie les informations et finalise son don depuis son telephone.",
+    question: "Comment fonctionne la commission ?",
+    answer:
+      "Muz'Deen prélève 3% sur chaque don reçu, automatiquement. Il n'y a aucun abonnement ni frais fixe : vous ne payez que si vous collectez. Les frais Stripe s'appliquent en plus, comme pour tout paiement par carte.",
   },
   {
-    question: "Est-ce securise ?",
-    answer: "La securite est pensee des la conception. Les paiements via Stripe sont prevus, et aucune donnee sensible de carte n'a vocation a etre stockee par Muz'Deen.",
+    question: "Muz'Deen détient-il l'argent des dons ?",
+    answer:
+      "Jamais. Les fonds vont directement de Stripe au compte de l'organisation. Muz'Deen n'est ni une banque ni un établissement de paiement : l'argent ne transite jamais par nos comptes.",
   },
   {
-    question: "Les mosquees peuvent-elles suivre les dons ?",
-    answer: "Oui, c'est prevu dans la roadmap avec un dashboard mosquee, des rapports et des vues par campagne.",
+    question: "Quelles organisations peuvent rejoindre Muz'Deen ?",
+    answer:
+      "Les mosquées, les associations de cours de Coran, les associations musulmanes, humanitaires et culturelles. Chaque organisation est vérifiée par notre équipe avant d'être mise en ligne.",
   },
   {
-    question: "Est-ce disponible aujourd'hui ?",
-    answer: "Muz'Deen est en cours de developpement. Le MVP permet de presenter l'experience et de preparer les mosquees pilotes avant la mise en production des paiements.",
+    question: "Combien de temps pour activer mon organisation ?",
+    answer:
+      "Après votre demande, notre équipe vérifie votre organisation, puis vous activez Stripe Connect (identité et RIB). Une fois ces étapes validées, vos QR codes sont générés et vous pouvez recevoir des dons.",
   },
   {
-    question: "Comment une mosquee peut-elle rejoindre Muz'Deen ?",
-    answer: "Elle peut demander une demo pour echanger sur ses besoins, tester le parcours et rejoindre une phase pilote quand elle sera ouverte.",
+    question: "Le donateur doit-il créer un compte ?",
+    answer:
+      "Non. Un don se fait en quelques secondes, sans friction. Le donateur peut ensuite, s'il le souhaite, suivre son historique et activer un don récurrent.",
   },
 ];
 
-export const trustItems = [
-  { icon: LockKeyhole, title: "Paiements prepares avec Stripe", text: "Stripe est l'option prevue pour les flux de paiement, a valider en test puis production." },
-  { icon: ShieldCheck, title: "Donnees sensibles limitees", text: "L'architecture vise a ne pas exposer inutilement les informations sensibles." },
-  { icon: BadgeCheck, title: "Transparence des dons", text: "Chaque parcours doit rester comprehensible pour la mosquee comme pour le donateur." },
-];
+/* ------------------------------------------------------------------ */
+/* 11. CTA final                                                       */
+/* ------------------------------------------------------------------ */
+
+export const finalCta = {
+  donor: {
+    title: "Je suis donateur",
+    text: "Soutenez votre mosquée ou votre association en quelques secondes, depuis votre téléphone.",
+    cta: { label: "Découvrir l'application", href: "#fonctionnement" },
+    icon: HandHeart,
+  },
+  organization: {
+    title: "Je représente une organisation",
+    text: "Modernisez votre collecte, gérez tout depuis l'app et rendez des comptes transparents.",
+    cta: { label: "Inscrire mon organisation", href: "#demo" },
+    icon: Building2,
+  },
+};
+
+/* ------------------------------------------------------------------ */
+/* Icônes utilitaires (mockups & app)                                 */
+/* ------------------------------------------------------------------ */
+
+export const appIcons = { QrCode, ReceiptText, Wallet, Moon, Megaphone, Clock3 };
