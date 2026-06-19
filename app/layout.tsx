@@ -6,7 +6,7 @@ const siteUrl = "https://muzdeen.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Muz'Deen - Modernisez les dons de votre mosquee",
+    default: "Muz'Deen - Pour ici et l'au-delà",
     template: "%s | Muz'Deen",
   },
   description:

@@ -1,61 +1,73 @@
-import { CheckCircle2 } from "lucide-react";
-import { MotionDiv, MotionSection } from "@/components/ui/motion";
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, Check, X } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
-import { problemPoints, solutionSteps } from "@/lib/content";
+import { EASE, Stagger, staggerItem } from "@/components/ui/motion";
+import { afterItems, beforeItems } from "@/lib/content";
 
 export function ProblemSolution() {
   return (
-    <>
-      <MotionSection className="py-20">
-        <div className="section-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-          <SectionHeader
-            eyebrow="Le probleme"
-            title="Le don physique ne suit plus les usages mobiles."
-            text="Les mosquees vivent encore beaucoup de la generosite spontanee. Mais quand le cash disparait des poches, une partie de cette generosite ne se transforme jamais en don."
-          />
-          <div className="grid gap-4">
-            {problemPoints.map((point, index) => (
-              <MotionDiv
-                className="rounded-3xl border border-[color:var(--ui-line)] bg-[color:var(--ui-surface-raised)] p-5 shadow-sm backdrop-blur"
-                delay={index * 0.06}
-                key={point}
-              >
-                <div className="flex gap-4">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[color:var(--ui-surface-soft)] text-sm font-black text-[color:var(--ui-accent)]">
-                    {index + 1}
-                  </span>
-                  <p className="leading-7 text-[color:var(--ui-muted-strong)]">{point}</p>
-                </div>
-              </MotionDiv>
-            ))}
-          </div>
-        </div>
-      </MotionSection>
+    <section id="solution" className="py-20 md:py-28">
+      <div className="section-shell">
+        <SectionHeader
+          eyebrow="Le problème"
+          title="Un système de dons resté à l'âge du papier."
+          text="Boîtes à dons, espèces, virements manuels, QR codes statiques, Excel et WhatsApp. Résultat : aucune visibilité, aucun reçu, et un temps précieux perdu en tâches manuelles."
+          align="center"
+        />
 
-      <MotionSection className="night-panel py-20" delay={0.05}>
-        <div id="solution" className="section-shell">
-          <SectionHeader
-            eyebrow="La solution"
-            title="Un parcours de don clair, rapide et accessible depuis le lieu de priere."
-            text="Muz'Deen transforme chaque support physique en point d'entree digital : porte de mosquee, affiche, badge NFC, campagne ou fiche mosquee."
-            tone="dark"
-          />
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {solutionSteps.map((step, index) => (
-              <MotionDiv
-                className="rounded-[1.5rem] border border-[color:var(--ui-line)] bg-[color:var(--ui-surface-raised)] p-5 backdrop-blur transition hover:bg-[color:var(--ui-surface-soft)]"
-                delay={index * 0.06}
-                key={step.title}
-              >
-                <step.icon className="h-8 w-8 text-[color:var(--ui-mint)]" />
-                <h3 className="mt-5 text-xl font-black text-[color:var(--ui-text)]">{step.title}</h3>
-                <p className="mt-3 leading-7 text-[color:var(--ui-muted-strong)]">{step.text}</p>
-                <CheckCircle2 className="mt-5 h-5 w-5 text-[color:var(--ui-mint)]" />
-              </MotionDiv>
+        <div className="mt-12 grid items-stretch gap-5 lg:grid-cols-[1fr_auto_1fr]">
+          {/* AVANT */}
+          <Stagger className="grid gap-3 rounded-[2rem] border border-[color:var(--ui-line)] bg-[color:var(--ui-surface-soft)] p-6 md:p-7">
+            <motion.p variants={staggerItem} className="mb-1 text-sm font-bold uppercase tracking-[0.16em] text-[color:var(--ui-muted)]">
+              Avant
+            </motion.p>
+            {beforeItems.map((item) => (
+              <motion.div variants={staggerItem} key={item.title} className="flex gap-3 rounded-2xl bg-[color:var(--ui-surface-raised)] p-4">
+                <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[color:var(--ui-surface-soft)] text-[color:var(--ui-muted)]">
+                  <X className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="font-black text-[color:var(--ui-text)]">{item.title}</p>
+                  <p className="mt-1 text-sm leading-6 text-[color:var(--ui-muted)]">{item.text}</p>
+                </div>
+              </motion.div>
             ))}
-          </div>
+          </Stagger>
+
+          {/* FLÈCHE TRANSITION */}
+          <motion.div
+            className="flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
+          >
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-[color:var(--ui-accent)] text-[color:var(--ui-on-primary)] shadow-lg lg:rotate-0 rotate-90">
+              <ArrowRight className="h-5 w-5" />
+            </span>
+          </motion.div>
+
+          {/* APRÈS */}
+          <Stagger className="grid gap-3 rounded-[2rem] border border-[color:var(--ui-mint)] bg-[color:var(--ui-accent)] p-6 text-[color:var(--ui-on-primary)] shadow-[0_30px_80px_color-mix(in_srgb,var(--ui-shadow)_22%,transparent)] md:p-7">
+            <motion.p variants={staggerItem} className="mb-1 text-sm font-bold uppercase tracking-[0.16em] text-[color:var(--ui-mint)]">
+              Avec Muz&apos;Deen
+            </motion.p>
+            {afterItems.map((item) => (
+              <motion.div variants={staggerItem} key={item.title} className="flex gap-3 rounded-2xl bg-[color:var(--ui-primary-overlay)] p-4 backdrop-blur">
+                <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[color:var(--ui-mint)] text-[color:var(--ui-accent)]">
+                  <Check className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="font-black">{item.title}</p>
+                  <p className="mt-1 text-sm leading-6 opacity-90">{item.text}</p>
+                </div>
+              </motion.div>
+            ))}
+          </Stagger>
         </div>
-      </MotionSection>
-    </>
+      </div>
+    </section>
   );
 }
